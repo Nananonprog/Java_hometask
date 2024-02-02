@@ -29,7 +29,7 @@ public class Main {
             System.out.println();
         }
 
-        
+        System.out.println("Здравствуйте! Желаю отличного дня, а мне удачи с Github");
     }
 
     }
