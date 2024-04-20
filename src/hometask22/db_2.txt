@@ -1,0 +1,106 @@
+
+1. В какие города фирма поставляет товар.
+USE db_2;
+SELECT CITY2 FROM zakaz;
+
+2. В каких городах проживают заказчики.
+USE db_2;
+SELECT CITY FROM zakaz;
+
+3. Какие заказчики обслуживаются менеджером с номером 1005.
+USE db_2;
+SELECT CNUM, NAME, KOD FROM zakaz
+WHERE KOD = 1005;
+
+4. Вывести только тех заказчиков, рейтинг которых более 380.
+USE db_2;
+SELECT CNUM, NAME, RATING FROM zakaz
+WHERE RATING > 380;
+
+5. Определите тех заказчиков в ремарках, о которых ничего не сказано.
+USE db_2;
+SELECT CNUM, NAME, REM FROM zakaz
+WHERE REM IS NULL;
+
+6. Выведите коды тех продавцов, которые имеют сумму заказа более 4000.
+USE db_2;
+SELECT KOD, SUM FROM zakaz
+WHERE SUM > 4000;
+
+7. Вывести тех заказчиков, сумма заказа которых менее 1000 и они не живут в Иркутске.
+USE db_2;
+SELECT CNUM, NAME, SUM, CITY FROM zakaz
+WHERE SUM < 1000 AND CITY <> "Иркутск";
+
+
+8. Вывести всех заказчиков, рейтинг которых от 100 до 270.
+USE db_2;
+SELECT CNUM, NAME, RATING FROM zakaz
+WHERE RATING BETWEEN 100 AND 270;
+
+9. Выведите фамилии, код, город проживания, тех заказчиков, которые поставляют товар не в тот город, в котором они проживают.
+USE db_2;
+SELECT CNUM, NAME, CITY, CITY2 FROM zakaz
+WHERE CITY <> CITY2;
+
+10. Вывести код  всех продавцов рейтинг заказчиков, которых менее 200 или больше 350.
+USE db_2;
+SELECT KOD, RATING FROM zakaz
+WHERE RATING < 200 OR RATING > 350;
+
+
+11. Вывести фамилии и товар всех заказчиков, которые заказали обеденные столы.
+USE db_2;
+SELECT NAME, Prod FROM zakaz
+WHERE Prod = "столы обеденные";
+
+12. Вывести фамилии заказчиков, в состав которых входит две буквы а и более.
+USE db_2;
+SELECT NAME FROM zakaz
+WHERE NAME LIKE '%а%а';
+
+13. Определите коды тех продавцов, фамилии заказчиков которых начинаются на К (вывести фамилию заказчика и номер продавца).
+USE db_2;
+SELECT KOD, NAME FROM zakaz
+WHERE NAME LIKE 'К%';
+
+14. Определите коды продавцов, которые продают стулья в Химках.
+USE db_2;
+SELECT KOD, Prod, CITY2 FROM zakaz
+WHERE Prod = "стулья" AND CITY2 = "Химки";
+
+15. Вывести всех заказчиков, которые проживают в Химках и продают товар там же, при этом сумма их заказа от 1000 до 1750.
+USE db_2;
+SELECT NAME, CITY, CITY2, SUM FROM zakaz
+WHERE CITY = "Химки"  AND CITY2 = "Химки" AND SUM BETWEEN 1000 AND 1750;
+
+16. Определить коды всех продавцов, которые не продают сейфы.
+USE db_2;
+SELECT KOD, Prod FROM zakaz
+WHERE Prod <> "сейфы";
+
+17. Выведите список заказанных диванов на сумму большую 4000.
+USE db_2;
+SELECT Prod, Sum FROM zakaz
+WHERE Prod = "диваны" AND Sum > 4000;
+
+18. Выведите фамилии теых заказчиков, которые купили стульев на сумму большую 1200.
+USE db_2;
+SELECT Name, Prod, Sum FROM zakaz
+WHERE Prod = "стулья"  and Sum > 1200;
+
+
+19. Определите фамилии тех продавцов, которые не живут в Иркутске и имеют рейтинг менее 200 пунктов.
+USE db_2;
+SELECT Name, CITY, RATING FROM zakaz
+WHERE CITY <> "Иркутск" AND RATING < 200;
+
+20. Написать запрос, который выводит фамилии заказчиков, которые имеют льготы на доставку.
+USE db_2;
+SELECT Name, REM FROM zakaz
+WHERE REM = "льготная доставка";
+
+21. Выведите фамилии продавцов, сумма заказа которых превышает 14000 тысяч и живут они не в Москве или Липецке.
+USE db_2;
+SELECT Name, CITY, SUM FROM zakaz
+WHERE SUM > 14000 AND (CITY <> "Москва" AND CITY <> "Липецк");
