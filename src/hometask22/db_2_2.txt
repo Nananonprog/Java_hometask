@@ -1,0 +1,55 @@
+6. Вывести коды заказчиков, которые работают в областных центрах (Иркутск,  Ижевск, Москва).
+USE db_2;
+SELECT KOD, CITY FROM zakaz
+WHERE CITY IN ('Иркутск', 'Ижевск', 'Москва');
+
+7. Выведите в алфавитном порядке список ремарок, которые есть на фирме и определены (без значения NULL).
+USE db_2;
+SELECT REM FROM zakaz
+WHERE REM IS NOT NULL
+ORDER BY REM ASC;
+
+8. Вывести коды всех продавцов заказчики, которых работают в городе Москва и не живут там.
+USE db_2;
+SELECT KOD, CITY, CITY2 FROM zakaz
+WHERE CITY2 LIKE 'Москва' AND CITY  <> 'Москва';
+
+
+9. Выведите в обратном порядке фамилии всех заказчиков, которых обслуживает продавец с номером 1012.
+USE db_2;
+SELECT NAME, KOD FROM zakaz
+WHERE KOD LIKE 1012
+ORDER BY NAME DESC;
+
+10. Определите всех заказчиков, которые живут во Владимире, и не покупали кухонные стенки.
+USE db_2;
+SELECT NAME, CITY, Prod FROM zakaz
+WHERE CITY = 'Владимир' AND  Prod NOT LIKE 'кухонные стенки';
+
+11. Определите в магазинах, каких городов продаются диваны этой фирмы. (Вывести атрибуты характеризующие город, товар и место продажи).
+USE db_2;
+SELECT NAME, CITY, Prod FROM zakaz
+USE db_2;
+SELECT CITY2, Prod FROM zakaz
+WHERE Prod = 'диваны';
+
+
+12. Вывести на первом месте код продавца, на втором фамилию заказчика. Код должен быть упорядочен в прямом порядке, а фамилии в обратном.
+USE db_2;
+SELECT KOD, Name FROM zakaz
+ORDER BY KOD ASC, Name DESC;
+
+13. Напишите запрос, который выведет коды всех продавцов заказчики, которые живут в Химках и покупают стулья.
+USE db_2;
+SELECT KOD, Name FROM zakaz
+WHERE CITY = 'Химки' AND Prod = 'стулья';
+
+14. Определите города, в которых продают стулья или столы для ПК.
+USE db_2;
+SELECT CITY2, Prod FROM zakaz
+WHERE Prod LIKE 'стулья' OR Prod LIKE 'столы для ПК';
+
+15. Определите коды продавцов, работающих по доверенности с заказчиками, живущими в Москве и имеющими рейтинг менее  190 пунктов.
+USE db_2;
+SELECT KOD, REM, RATING FROM zakaz
+WHERE REM = 'доверенность' AND RATING < 190;

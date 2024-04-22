@@ -104,3 +104,4 @@ WHERE REM = "льготная доставка";
 USE db_2;
 SELECT Name, CITY, SUM FROM zakaz
 WHERE SUM > 14000 AND (CITY <> "Москва" AND CITY <> "Липецк");
+
