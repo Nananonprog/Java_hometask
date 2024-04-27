@@ -1,0 +1,55 @@
+Вставьте строку NTC-117BK Micro Camera Case, нейлон, ч, 13,3x8,3x5,7, 2016, Беларусь,
+1046
+USE db_4;
+INSERT INTO ware(ID, Produce, Material, Color, Size, Country, ID_salespeople, REM)
+VALUES (1046,"NTC-117BK", "нейлон", "ч", "13,3x8,3x5,7", "Беларусь", 2016, "Micro Camera Case")
+
+Вставьте строку POC-463BK
+Compact Camera Case, полиэстер, ч, 11x7x4,5,
+Беларусь, остальные данные не определены.
+USE db_4;
+INSERT INTO ware(ID, Produce, Material, Color, Size, Country, REM)
+ VALUES(1050, "POC-463BK", "полиэстер", "ч", "11x7x4,5", "Беларусь", "Compact Camera Case");
+
+Написать запрос, который заменит код поставщика на 2000, если на складе хранится
+товара менее чем на 500 руб. По данному поставщику.
+USE db_4;
+UPDATE ware
+SET id_salespeople = 2000
+WHERE Price * Count < 500;
+
+Замените материал нейлон на брезент, если сумка стоит менее 200 руб.
+USE db_4;
+UPDATE ware
+SET Material = "брезент"
+WHERE Material = "нейлон"  AND Price < 200;
+
+Напишите запрос, который покажет все кожаные сумки черного цвета китайского
+производства.
+USE db_4;
+SELECT * FROM ware
+WHERE Material = "кожа" AND Color = "ч" AND Country = "Китай";
+
+Напишите запрос, который покажет все сумки с размером более 15 дюймов.
+USE db_4;
+SELECT * FROM ware
+WHERE REM REGEXP '1[5-9]+[,][0-9]*|1[6-9]+';
+
+Напишите запрос, который покажет всех поставщиков сумок не черного цвета.
+USE db_4;
+SELECT ID_salespeople, Color FROM ware
+WHERE Color NOT LIKE 'ч';
+
+Замените материал полиэстер у сумок китайского производства на нейлон
+USE db_4;
+UPDATE ware
+SET Material = "нейлон"
+WHERE Material = "полиэстер"  AND Country = "Китай";
+
+В записях с кодом товара: 1015, 1041, 1032, 1010 материал нейлон заменить на полиэстер
+если страна-производитель Китай.
+
+USE db_4;
+UPDATE ware
+SET Material = "полиэстер"
+WHERE Material = "нейлон" AND Country = "Китай" AND ID IN (1015, 1041, 1032, 1010);
