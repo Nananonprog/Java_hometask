@@ -1,0 +1,100 @@
+8.Сосчитать общее количество видов закупленных фирмой вафель.
+SELECT SUM(cg.Count) AS "Количество закупленных вафель"
+FROM sallergoods sg, clientgoods cg, client c, seller s
+WHERE c.INNClient = cg.INNClient AND cg.ID = sg.ID AND sg.INNSeller = s.INNSeller AND sg.Goods LIKE "Вафли%";
+
+
+9.Определите сколько всего было продано килограмм яблок.
+SELECT SUM(cg.Count) AS "Количество проданных яблок"
+FROM sallergoods sg, clientgoods cg, client c, seller s
+WHERE c.INNClient = cg.INNClient AND cg.ID = sg.ID AND sg.INNSeller = s.INNSeller AND sg.Goods LIKE "Яблоки%";
+
+
+10 Определите какое количество картофеля закупили кафе.
+SELECT SUM(cg.Count) AS "Количество закупленного кафе картофеля"
+FROM sallergoods sg, clientgoods cg, client c, seller s
+WHERE c.INNClient = cg.INNClient AND cg.ID = sg.ID AND sg.INNSeller = s.INNSeller AND sg.Goods LIKE "Картофель белый" AND c.Status = "кафе";
+
+
+11 Посчитать сколько клиентов купили перец черный молотый.
+SELECT COUNT(c.Client) AS "Кол-во клиентов, купивших молотый черный перец"
+FROM sallergoods sg, clientgoods cg, client c, seller s
+WHERE c.INNClient = cg.INNClient AND cg.ID = sg.ID AND sg.INNSeller = s.INNSeller AND sg.Goods LIKE "Перец черный молотый";
+
+
+12 Определить сколько наименований товара было куплено у посредников.
+SELECT COUNT(cg.ID) AS "Кол-во наименований, купленного у посредников"
+FROM sallergoods sg, clientgoods cg, client c, seller s
+WHERE c.INNClient = cg.INNClient AND cg.ID = sg.ID AND sg.INNSeller = s.INNSeller AND s.Status LIKE "посредник";
+
+
+13 Определить минимальную цену за единицу проданного товара.
+SELECT sg.Goods, MIN(cg.CostUnit) AS "Минимальная стоимость единицы товара"
+FROM ClientGoods cg, Client c, SallerGoods sg, seller s
+WHERE cg.INNClient = c.INNClient AND cg.ID = sg.ID
+GROUP BY sg.Goods;
+
+
+14 Определите минимальную сумму на какую было закуплено товара.
+SELECT c.INNClient, MIN(cg.CostUnit * cg.Count) AS "Минимальная сумма закупленного товара"
+FROM ClientGoods cg, Client c
+WHERE cg.INNClient = c.INNClient
+GROUP BY c.INNClient;
+ИЛИ(Альтернатива)
+SELECT c.INNClient, SUM(cg.CostUnit* cg.Count) as minsum
+FROM  clientgoods cg, client c
+WHERE cg.INNClient = c.INNClient
+GROUP BY c.INNClient
+ORDER BY minsum asc limit 1;
+
+
+15 Определить максимальную сумму за товар, проданный магазинам.
+SELECT MAX(cg.CostUnit * cg.Count) as "Максимальная сумма за товар, проданный по магазинам"
+FROM ClientGoods cg, Client c
+WHERE c.Status LIKE "магазин" AND cg.INNClient = c.INNClient;
+
+
+16 Определить среднюю цену за пачку чая при покупке.
+SELECT AVG(cg.CostUnit) as "Средняя цена за пачку чая"
+FROM ClientGoods cg, Client c, sallergoods sg, seller s
+WHERE sg.Goods LIKE "Чай%" AND cg.INNClient = c.INNClient AND cg.ID = sg.ID;
+
+
+17 Определите максимальную сумму прибыли за товар, проданный посреднику.
+SELECT MAX(cg.CostUnit* cg.Count) as "Максимальная прибыль за проданный посреднику товар"
+FROM ClientGoods cg, Client c
+WHERE c.Status LIKE "посредник" AND cg.INNClient = c.INNClient;
+
+
+18 Определите минимальную прибыль за товар, купленный у посредника.
+SELECT s.INNSeller, s.Seller,  MIN(cg.CostUnit* cg.Count) as "Минимальная прибыль за товар, купленный у посредника"
+FROM ClientGoods cg, Client c, seller s, sallergoods sg
+WHERE s.Status LIKE "посредник" AND cg.INNClient = c.INNClient AND cg.ID = sg.ID AND sg.INNSeller = s.INNSeller
+GROUP BY s.INNSeller;
+
+
+19 Какое количество наименований товара куплено у фирмы.
+SELECT s.INNSeller, s.Seller, COUNT(cg.ID) AS "Кол-во наименований, купленного у фирмы"
+FROM sallergoods sg, clientgoods cg, client c, seller s
+WHERE c.INNClient = cg.INNClient AND cg.ID = sg.ID AND sg.INNSeller = s.INNSeller
+GROUP BY s.INNSeller;
+
+
+20 Сколько в продаже видов печенья.
+SELECT  COUNT(sg.ID) AS "Кол-во видов печенья в продаже"
+FROM sallergoods sg
+WHERE sg.Goods like "печенье%";
+
+
+21 Какая максимальная сумма покупки, на которую клиент сделал заказ.
+SELECT c.INNClient, SUM(cg.CostUnit* cg.Count) as maxisum
+FROM  clientgoods cg, client c
+WHERE cg.INNClient = c.INNClient
+GROUP BY c.INNClient
+ORDER BY maxisum desc limit 1;
+
+
+22 Со сколькими посредниками сотрудничает фирма.
+SELECT count(s.INNSeller) as "Посредники, работающие с фирмой"
+FROM seller s
+WHERE s.Status = "Посредник" ;
