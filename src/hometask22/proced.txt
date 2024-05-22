@@ -1,0 +1,17 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `suma`()
+BEGIN
+	DECLARE i INT DEFAULT 1;
+    DECLARE summa int default 0 ;
+
+    loop_sum: LOOP
+		SET summa = summa + i;
+        SET i = i + 1;
+		IF i > 10 THEN
+			LEAVE loop_sum;
+		END IF;
+	END LOOP loop_sum;
+        SELECT summa AS "Сумма чисел от 1 до 10";
+
+END
+
+call suma();
